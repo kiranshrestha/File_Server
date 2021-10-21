@@ -1,0 +1,7 @@
+content:
+- Functional decomposition
+- Thread management
+- Thread synchronization
+- Executors
+- Serialization basics
+- Custom serialization

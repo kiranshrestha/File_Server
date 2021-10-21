@@ -1,0 +1,162 @@
+type: edu
+files:
+- name: src/server/Main.java
+  visible: true
+  text: |-
+    package server;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            System.out.println("Hello, world!");
+        }
+    }
+  learner_created: false
+- name: test/FileServerTest.java
+  visible: false
+  text: |
+    import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.TestedProgram;
+
+
+    public class FileServerTest extends StageTest<String> {
+
+        @DynamicTestingMethod
+        CheckResult test() throws InterruptedException {
+
+            TestedProgram client = new TestedProgram("client");
+            TestedProgram server = new TestedProgram("server");
+            server.setReturnOutputAfterExecution(true);
+
+            server.startInBackground();
+
+            Thread.sleep(1000);
+            String serverOutput = server.getOutput().trim();
+
+            String serverStartedMessage = "Server started!";
+            if (!serverOutput.equals(serverStartedMessage)) {
+                throw new WrongAnswer("Server output should be \"" + serverStartedMessage + "\" until the client connects!");
+            }
+
+            String clientOutput = client.start().trim();
+            serverOutput = server.getOutput().trim();
+
+            if (clientOutput.isEmpty()) {
+                return CheckResult.wrong("Client output shouldn't be empty!");
+            }
+
+            if (serverOutput.equals(serverStartedMessage)) {
+                return CheckResult.wrong("After the client connects to the server you should output the received data!");
+            }
+
+            if (!serverOutput.contains("Received: Give me everything you have!")) {
+                return CheckResult.wrong("Server output should contain \"Received: Give me everything you have!\"");
+            }
+
+            if (!serverOutput.contains("Sent: All files were sent!")) {
+                return CheckResult.wrong("Server output should contain \"Sent: All files were sent!\"");
+            }
+
+            if (serverOutput.indexOf("Sent: All files were sent!") < serverOutput.indexOf("Received: Give me everything you have!")) {
+                return CheckResult.wrong("The server should print \"Sent: All files were sent!\" only after " +
+                    "\"Received: Give me everything you have!\" was printed!");
+            }
+
+            if (!clientOutput.contains("Sent: Give me everything you have!")) {
+                return CheckResult.wrong("Client output should contain \"Sent: Give me everything you have!\"");
+            }
+
+            if (!clientOutput.contains("Received: All files were sent!")) {
+                return CheckResult.wrong("Client output should contain \"Received: All files were sent!\"");
+            }
+
+            if (clientOutput.indexOf("Received: All files were sent!") < clientOutput.indexOf("Sent: Give me everything you have!")) {
+                return CheckResult.wrong("The client should print \"Received: All files were sent!\" only after " +
+                    "\"Sent: Give me everything you have!\" was printed!");
+            }
+
+            return CheckResult.correct();
+        }
+    }
+  learner_created: false
+- name: src/server/FileHandler.java
+  visible: true
+  text: |
+    package server;
+
+    import java.io.File;
+    import java.io.IOException;
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Scanner;
+
+    public class FileHandler {
+        Scanner s;
+        ArrayList<String> files;
+
+
+        public FileHandler(Scanner s) {
+            this.s = s;
+            files = new ArrayList<>();
+        }
+
+        public void processCommands() {
+            String command = s.nextLine();
+
+            List<String> cmdList = List.of(command.split(" "));
+
+            switch (cmdList.get(0)) {
+                case "add" : {
+                        String pathname = cmdList.get(1);
+                        String dig = pathname.replaceAll("[^0-9]", "");
+                        if(dig.isEmpty() || Integer.parseInt(dig) > 10) {
+                            System.out.printf("Cannot add the file %s\n", cmdList.get(1));
+                            break;
+                        }
+                        if (files.stream().noneMatch(s -> s.equals(cmdList.get(1))))  {
+                            files.add(cmdList.get(1));
+                            System.out.printf("The file %s added successfully\n", cmdList.get(1));
+                        } else {
+                            System.out.printf("Cannot add the file %s\n", cmdList.get(1));
+                        }
+
+                    break;
+                }
+                case "get" : {
+                    if (files.stream().anyMatch(s -> s.equals(cmdList.get(1)))) {
+                        System.out.printf("The file %s was sent\n", cmdList.get(1));
+                    } else {
+                        System.out.printf("The file %s not found\n", cmdList.get(1));
+                    }
+                    break;
+                }
+                case "delete" : {
+                    if (files.stream().anyMatch(s -> s.equals(cmdList.get(1)))) {
+                        files.remove(cmdList.get(1));
+                        System.out.printf("The file %s was deleted\n", cmdList.get(1));
+                    } else {
+                        System.out.printf("The file %s not found\n", cmdList.get(1));
+                    }
+                    break;
+                }
+                case "exit" : {
+                    System.exit(0);
+                }
+            }
+            processCommands();
+
+        }
+    }
+  learner_created: true
+- name: src/client/Main.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/52/stages/284/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 16 Oct 2021 05:23:03 UTC
+record: 2

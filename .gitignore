@@ -1,0 +1,43 @@
+# Project exclude paths
+/.gradle/
+/File Server/task/build/
+/File Server/task/out/
+/File Server/task/out/production/classes/
+/File Server/task/out/test/classes/
+/File Server/task/src/server/data/
+/Topics/Custom serialization/Password processing/out/
+/Topics/Custom serialization/Password processing/out/production/classes/
+/Topics/Custom serialization/The Range class/out/
+/Topics/Custom serialization/The Range class/out/production/classes/
+/Topics/Custom serialization/Theory/out/
+/Topics/Custom serialization/Theory/out/production/classes/
+/Topics/Executors/Asynchronous email sending/out/
+/Topics/Executors/Asynchronous email sending/out/production/classes/
+/Topics/Executors/Check whether a number is prime/out/
+/Topics/Executors/Check whether a number is prime/out/production/classes/
+/Topics/Executors/Messaging/out/
+/Topics/Executors/Messaging/out/production/classes/
+/Topics/Executors/Theory/out/
+/Topics/Executors/Theory/out/production/classes/
+/Topics/Functional decomposition/Calculator with four methods/out/
+/Topics/Functional decomposition/Calculator with four methods/out/production/classes/
+/Topics/Functional decomposition/Decompose a math function/out/
+/Topics/Functional decomposition/Decompose a math function/out/production/classes/
+/Topics/Functional decomposition/Theory/out/
+/Topics/Functional decomposition/Theory/out/production/classes/
+/Topics/Serialization basics/Serializable user/out/
+/Topics/Serialization basics/Serializable user/out/production/classes/
+/Topics/Serialization basics/Theory/out/
+/Topics/Serialization basics/Theory/out/production/classes/
+/Topics/Thread management/Summing with threads/out/
+/Topics/Thread management/Summing with threads/out/production/classes/
+/Topics/Thread management/Theory/out/
+/Topics/Thread management/Theory/out/production/classes/
+/Topics/Thread synchronization/Countdown counter/out/
+/Topics/Thread synchronization/Countdown counter/out/production/classes/
+/Topics/Thread synchronization/Multithreaded counter/out/
+/Topics/Thread synchronization/Multithreaded counter/out/production/classes/
+/Topics/Thread synchronization/Theory/out/
+/Topics/Thread synchronization/Theory/out/production/classes/
+/Topics/Thread synchronization/Thread-safe account/out/
+/Topics/Thread synchronization/Thread-safe account/out/production/classes/
